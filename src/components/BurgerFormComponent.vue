@@ -67,9 +67,12 @@ const optionals = ref([]);
 
 const msg = ref('');
 
+const URL_INGREDIENTS = 'http://localhost:3000/ingredientes';
+const URL_BURGERS = 'http://localhost:3000/burgers';
+
 const getIngredients = async () => {
 
-    const req = await fetch('http://localhost:3000/ingredientes');
+    const req = await fetch(URL_INGREDIENTS);
     const data = await req.json();
 
     breads.value = data.paes;
@@ -89,7 +92,7 @@ const createBurger = async () => {
         status: 'Solicitado'
     }
     
-    const req = await fetch('http://localhost:3000/burgers',{
+    const req = await fetch(URL_BURGERS, {
         method: 'POST',
         headers: { 'Content-type': 'application/json' },
         body: JSON.stringify(data)

@@ -1,4 +1,5 @@
 <template>
+  <MessageComponent v-if="msg" :msg="msg"/>
   <table role="grid">
     <thead>
       <tr>
@@ -26,12 +27,14 @@
         </td>
 
         <td class="actions">
-          <button class="secondary">
+          <button class="secondary" @click="deleteBurger(burger.id)">
             Cancelar
           </button>
-          <select name="" id="">
-            <option value="">Em produção</option>
-            <option value="">Finalizado</option>
+          <select name="" id="" @change="updateStatus($event, burger.id)">
+            <option value="">Selecione</option>
+            <option :value="state.tipo" v-for="state in status" :key="state.id" :selected="burger.status === state.tipo">
+              {{ state.tipo }}
+            </option>
           </select>
         </td>
       </tr>
@@ -40,19 +43,64 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref } from 'vue';
+import { MessageComponent } from './';
 
 const burgers = ref();
-const burgers_id = ref();
 const status = ref([]);
+const msg = ref();
+
+
+const URL_BURGERS = 'http://localhost:3000/burgers';
+const URL_STATUS = 'http://localhost:3000/status';
+
+// console.log(URL_BURGERS + '/1')
 
 const getOrder = async () => {
-  const req = await fetch('http://localhost:3000/burgers');
+  const req = await fetch(URL_BURGERS);
+  const data = await req.json();
+  
+  burgers.value = data;
+
+  getStatus();
+}
+
+const getStatus = async () => {
+  const req = await fetch(URL_STATUS);
   const data = await req.json();
 
-  console.log(data);
+  status.value = data;
+}
 
-  burgers.value = data;
+const updateStatus = async (event, burgerId) => {
+  
+  const status = event.target.value;
+  
+  const req = await fetch(URL_BURGERS + `/${burgerId}`, {
+    method: 'PATCH',
+    headers: { 'Content-type': 'application/json' },
+    body: JSON.stringify({ status })
+  });
+
+  const res = await req.json();
+
+  msg.value = `Status do pedido N°${res.id} atualizado para "${res.status}" com sucesso!`;
+  removeMsg();
+}
+
+const deleteBurger = async (burgerId) => {
+  await fetch(URL_BURGERS + `/${burgerId}`, {
+    method: 'DELETE'
+  });
+
+  getOrder();
+
+  msg.value = `Pedido N°${burgerId} removido com sucesso!`;
+  removeMsg();
+}
+
+function removeMsg() {
+  setTimeout(() => { msg.value = ''}, 3000);
 }
 
 onMounted(() => {
@@ -81,20 +129,8 @@ onMounted(() => {
 button,
 select {
   width: 70%;
-  font-size: 90%;
+  font-size: 70%;
   margin-bottom: 1em;
 }
 
-button {
-  padding: .8em .5em;
-}
-
-
-.actions {
-  padding: 1em 0 1em 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
 </style>

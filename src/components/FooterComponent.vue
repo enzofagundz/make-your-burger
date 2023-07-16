@@ -1,5 +1,5 @@
 <template>
-    <footer class="container-fluid">
+    <footer class="container">
         <small>
             Make Your Burger &copy; 2023
         </small>
@@ -11,7 +11,9 @@
 </script>
 
 <style scoped>
-    footer {
-        margin-bottom: 3em;
-    }
+
+footer {
+    margin-bottom: 3em;
+}
+
 </style>
