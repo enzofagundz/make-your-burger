@@ -1,22 +1,20 @@
 <template>
-    <article class="grid" id="banner">
-        <hgroup>
-            <h2>
-                Make Your Burguer
-            </h2>
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam, atque provident at veritatis nihil vitae
-                deleniti
-                ducimus totam quisquam animi quia eum nisi voluptatem temporibus consectetur iste iure reiciendis non?
-            </p>
-        </hgroup>
-        <div id="burguer"></div>
-        <footer>
-            <a href="#orders" role="button" class="outline">
-                Monte seu hamburguer agora!
-            </a>
-        </footer>
-    </article>
+  <article class="grid" id="banner">
+    <hgroup>
+      <h2>
+        Make Your Burguer
+      </h2>
+      <p>
+        Seja o chef do seu lanche no Make Your Burger! Aqui, você monta seu hambúrguer com os ingredientes que mais gosta, do pão ao molho. Temos opções para todos os paladares e preços. Venha provar essa delícia. Make Your Burger, o seu lanche, do seu jeito!
+      </p>
+    </hgroup>
+    <div id="burguer"></div>
+    <footer>
+      <a href="#orders" role="button" class="outline">
+        Monte seu hamburguer agora!
+      </a>
+    </footer>
+  </article>
 </template>
 
 <script setup>
@@ -24,7 +22,6 @@
 </script>
 
 <style scoped>
-
 a {
   width: 100%;
 }
@@ -36,7 +33,8 @@ footer {
   justify-content: center;
 }
 
-hgroup, button {
+hgroup,
+button {
   margin-bottom: 0;
 }
 
@@ -64,5 +62,4 @@ hgroup, button {
   hgroup {
     margin: 4em;
   }
-}
-</style>
+}</style>
