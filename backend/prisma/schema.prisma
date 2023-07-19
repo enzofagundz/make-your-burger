@@ -1,0 +1,80 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Post {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  title     String   @db.VarChar(255)
+  content   String?
+  published Boolean  @default(false)
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  Int
+}
+
+model Profile {
+  id     Int     @id @default(autoincrement())
+  bio    String?
+  user   User    @relation(fields: [userId], references: [id])
+  userId Int     @unique
+}
+
+model User {
+  id      Int      @id @default(autoincrement())
+  email   String   @unique
+  name    String?
+  posts   Post[]
+  profile Profile?
+}
+
+// Modelos para o banco de dados da Hamburgueria
+
+model Bread {
+  bread_id Int     @id @default(autoincrement())
+  name     String  @unique
+  Order    Order[]
+}
+
+model Meat {
+  meat_id Int     @id @default(autoincrement())
+  name    String  @unique
+  Order   Order[]
+}
+
+model Status {
+  status_id Int     @id @default(autoincrement())
+  name      String  @unique
+  Order     Order[]
+}
+
+model Optional {
+  optional_id Int    @id @default(autoincrement())
+  name        String @unique
+}
+
+model Customer {
+  customer_id  Int     @id @default(autoincrement())
+  name         String  @unique
+  table_number Int
+  Order        Order[]
+}
+
+model Order {
+  order_id    Int      @id @default(autoincrement())
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+  customer_id Int
+  customer    Customer @relation(fields: [customer_id], references: [customer_id])
+  bread_id    Int
+  bread       Bread    @relation(fields: [bread_id], references: [bread_id])
+  meat_id     Int
+  meat        Meat     @relation(fields: [meat_id], references: [meat_id])
+  status_id   Int
+  status      Status   @relation(fields: [status_id], references: [status_id])
+}
