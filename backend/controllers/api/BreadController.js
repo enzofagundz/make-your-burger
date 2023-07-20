@@ -1,5 +1,6 @@
 const { Prisma } = require('@prisma/client');
 const PrismaClass = require('../../prisma/PrismaClass');
+const e = require('express');
 const p = PrismaClass.getPrisma();
 
 // Jamais descomente esse console.log. Passível de explosão.
@@ -23,7 +24,7 @@ class BreadController {
     // Criar uma função para retornar um pão pelo id
 
     // show = async (id) => {
-    
+
     show = async (req, res) => {
         // const bread = await p.bread.findMany({
         //     where: {
@@ -33,7 +34,7 @@ class BreadController {
 
         // PrismaClass.disconnect();
 
-        let id = req.params.id;
+        const id = req.params.id;
 
         try {
             const bread = await p.bread.findMany({
@@ -53,41 +54,62 @@ class BreadController {
 
     // Criar uma função para criar um novo pão
 
-    store = async (name) => {
-        const bread = await p.bread.create({
-            data: {
-                name: name
-            }
-        });
+    store = async (req, res) => {
+        const name = req.body.name;
 
-        PrismaClass.disconnect();
-        return bread;
+        try {
+
+            const bread = await p.bread.create({
+                data: {
+                    name: name
+                }
+            });
+            PrismaClass.disconnect();
+            return res.json(bread);
+        } catch (e) {
+            console.log(e);
+            res.json({ error: 'Ocorreu um erro ao criar o pão' });
+        }
     }
 
     // Criar uma função para atualizar o nome de um pão
 
-    update = async (id, name) => {
-        const bread = await p.bread.update({
-            where: {
-                bread_id: Number(id)
-            },
-            data: {
-                name: name
-            }
-        });
+    update = async (req, res) => {
 
-        PrismaClass.disconnect();
-        return bread;
+        try {
+            const id = req.body.id;
+            const name = req.body.name;
+
+            const bread = await p.bread.update({
+                where: {
+                    bread_id: Number(id)
+                },
+                data: {
+                    name: name
+                }
+            });
+            PrismaClass.disconnect();
+            return res.json(bread);
+        } catch (e) {
+            console.log(e);
+            res.json({ error: 'Ocorreu um erro ao atualizar o pão' });
+        }
     }
 
     // Criar uma função para deletar um pão
 
-    destroy = async (id) => {
-        const bread = await p.bread.delete({
-            where: { bread_id: Number(id) }
-        });
-
-        PrismaClass.disconnect();
+    destroy = async (req, res) => {
+        try {
+            const id = req.params.id;
+            const bread = await p.bread.delete({
+                where: { bread_id: Number(id) }
+            });
+            PrismaClass.disconnect();
+            return res.json({ message: 'Pão deletado com sucesso'});
+        } catch (e) {
+            console.log(e);
+            res.json({ error: 'Ocorreu um erro ao deletar o pão' });
+        }
     }
 }
 
