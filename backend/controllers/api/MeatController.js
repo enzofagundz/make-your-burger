@@ -2,89 +2,89 @@ const { Prisma } = require('@prisma/client');
 const PrismaClass = require('../../prisma/PrismaClass');
 const p = PrismaClass.getPrisma();
 
-// Jamais descomente esse console.log. Passível de explosão.
-// console.log(p);
-
-class BreadController {
+class MeatController {
     async index(req, res) {
         try {
-            const breads = await p.bread.findMany({
+            const meats = await p.meat.findMany({
                 orderBy: {
-                    bread_id: 'asc'
+                    meat_id: 'asc'
                 }
             });
             PrismaClass.disconnect();
-            return res.json(breads);
+            return res.json(meats);
+
         } catch (e) {
             PrismaClass.disconnect();
-            return res.json({ error: error.message });
+            return res.json({ error: 'Ocorreu um erro ao buscar os carnes' });
         }
     }
 
     async show(req, res) {
         const id = req.params.id;
         try {
-            const bread = await p.bread.findMany({
+            const meat = await p.meat.findMany({
                 where: {
-                    bread_id: Number(id)
+                    meat_id: Number(id)
                 }
             });
             PrismaClass.disconnect();
-            return res.json(bread);
+            return res.json(meat);
         } catch (e) {
             PrismaClass.disconnect();
-            res.json({ error: error.message });
+            res.json({ error: 'Ocorreu um erro ao buscar o carne' });
         }
     }
 
     async store(req, res) {
         const name = req.body.name;
         try {
-            const bread = await p.bread.create({
+            const meat = await p.meat.create({
                 data: {
                     name: name
                 }
             });
             PrismaClass.disconnect();
-            return res.json(bread);
+            return res.json(meat);
         } catch (e) {
             PrismaClass.disconnect();
-            res.json({ error: error.message });
+            res.json({ error: 'Ocorreu um erro ao salvar a carne' });
         }
     }
 
     async update(req, res) {
+        const { id, name } = req.body;
         try {
-            const { id, name } = req.body;
-            const bread = await p.bread.update({
+            const meat = await p.meat.update({
                 where: {
-                    bread_id: Number(id)
+                    meat_id: Number(id)
                 },
                 data: {
                     name: name
                 }
             });
             PrismaClass.disconnect();
-            return res.json(bread);
+            return res.json(meat);
         } catch (e) {
             PrismaClass.disconnect();
-            res.json({ error: error.message });
+            res.json({ error: 'Ocorreu um erro ao atualizar a carne' });
         }
     }
 
     async destroy(req, res) {
+        const id = req.params.id;
         try {
-            const id = req.params.id;
-            await p.bread.delete({
-                where: { bread_id: Number(id) }
+            await p.meat.delete({
+                where: {
+                    meat_id: Number(id)
+                }
             });
             PrismaClass.disconnect();
-            return res.json({ message: 'Pão deletado com sucesso' });
+            return res.json({ message: 'Carne deletada com sucesso' });
         } catch (e) {
             PrismaClass.disconnect();
-            res.json({ error: error.message });
+            res.json({ error: 'Ocorreu um erro ao deletar a carne' });
         }
     }
 }
 
-module.exports = new BreadController();
+module.exports = new MeatController();
