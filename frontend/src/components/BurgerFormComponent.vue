@@ -16,8 +16,12 @@
                 <label for="bread">Escolha o pão:
                     <select name="bread" id="bread" v-model="breadsForm" required>
                         <option value="" selected>Selecione o tipo de pão</option>
-                        <option :value="bread.tipo" v-for="bread in breads" :key="bread.id">
-                            {{ bread.tipo }}
+                        <option 
+                            :value="bread.name"
+                            v-for="bread in breads"
+                            :key="bread.id"
+                        >
+                            {{ bread.name }}
                         </option>
                     </select>
                 </label>
@@ -27,8 +31,12 @@
                 <label for="meat">Escolha a carne:
                     <select name="meat" id="meat" v-model="meatsForm" required>
                         <option value="" selected>Selecione o tipo de carne</option>
-                        <option :value="meat.tipo" v-for="meat in meats" :key="meat.id">
-                            {{ meat.tipo }}
+                        <option
+                            :value="meat.name"
+                            v-for="meat in meats"
+                            :key="meat.id"
+                        >
+                            {{ meat.name }}
                         </option>
                     </select>
                 </label>
@@ -38,9 +46,18 @@
                 <legend>
                     Escolha os opcionais:
                 </legend>
-                <label for="optional" v-for="optional in optionalData" :key="optional.id">
-                    <input type="checkbox" name="optional" :value="optional.tipo" v-model="optionals">
-                    {{ optional.tipo }}
+                <label 
+                    for="optional"
+                    v-for="optional in optionalData"
+                    :key="optional.id"
+                >
+                    <input 
+                        type="checkbox"
+                        name="optional"
+                        :value="optional.name"
+                        v-model="optionals"
+                    >
+                    {{ optional.name }}
                 </label>
             </fieldset>
 
@@ -67,32 +84,35 @@ const optionals = ref([]);
 
 const msg = ref('');
 
-const URL_INGREDIENTS = 'http://localhost:3000/ingredientes';
-const URL_BURGERS = 'http://localhost:3000/burgers';
+const URL_INGREDIENTS = 'http://localhost:3333/ingredients';
+const URL_CREATE_ORDER= 'http://localhost:3333/createOrder';
 
 const getIngredients = async () => {
 
-    const req = await fetch(URL_INGREDIENTS);
-    const data = await req.json();
+    try {
+        const res = await fetch(URL_INGREDIENTS);
+        const data = await res.json();
 
-    breads.value = data.paes;
-    meats.value = data.carnes;
-    optionalData.value = data.opcionais;
+        breads.value = data.breads;
+        meats.value = data.meats;
+        optionalData.value = data.optionals;
+    } catch (error) {
+        console.log(error);
+    }
 }
-
+ 
 const createBurger = async () => {
     let breads = breadsForm.value;
     let meats = meatsForm.value;
-    
     const data = {
-        nome: name.value,
-        carne: meats,
-        pao: breads,
-        opcionais: Array.from(optionals.value),
-        status: 'Solicitado'
+        customer_name: name.value,
+        meat_id: meats,
+        bread_id: breads,
+        optional_id: Array.from(optionals.value),
+        status_id: 1
     }
     
-    const req = await fetch(URL_BURGERS, {
+    const req = await fetch(URL_CREATE_ORDER, {
         method: 'POST',
         headers: { 'Content-type': 'application/json' },
         body: JSON.stringify(data)

@@ -12,7 +12,6 @@ class OrderController {
                     bread: true,
                     meat: true,
                     status: true,
-                    customer: true,
                     optional: true
                 }
             });
@@ -47,14 +46,14 @@ class OrderController {
     }
 
     async store(req, res) {
-        const { bread_id, meat_id, status_id, customer_id, optional_id } = req.body;
+        const { bread_id, meat_id, status_id, customer, optional_id } = req.body;
         try {
             const order = await p.order.create({
                 data: {
                     bread_id: Number(bread_id),
                     meat_id: Number(meat_id),
                     status_id: Number(status_id),
-                    customer_id: Number(customer_id),
+                    customer_name: customer,
                     optional_id: Number(optional_id)
                 }
             });

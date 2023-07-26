@@ -5,8 +5,8 @@ const BreadController = require('../controllers/api/BreadController');
 const MeatController = require('../controllers/api/MeatController');
 const StatusController = require('../controllers/api/StatusController');
 const OptionalController = require('../controllers/api/OptionalController');
-const CustomerController = require('../controllers/api/CustomerController');
 const OrderController = require('../controllers/api/OrderController');
+const IngredientController = require('../controllers/api/IngredientController');
 
 // Rotas de pães
 
@@ -37,14 +37,6 @@ router.post('/createOptional', (req, res) => OptionalController.store(req, res))
 router.put('/updateOptional', (req, res) => OptionalController.update(req, res));
 router.delete('/deleteOptional/:id', (req, res) => OptionalController.destroy(req, res));
 
-// Rotas de clientes
-
-router.get('/customers', (req, res) => CustomerController.index(req, res));
-router.get('/customers/:id?', (req, res) => CustomerController.show(req, res));
-router.post('/createCustomer', (req, res) => CustomerController.store(req, res));
-router.put('/updateCustomer', (req, res) => CustomerController.update(req, res));
-router.delete('/deleteCustomer/:id', (req, res) => CustomerController.destroy(req, res));
-
 // Rotas de pedidos
 
 router.get('/orders', (req, res) => OrderController.index(req, res));
@@ -52,5 +44,9 @@ router.get('/orders/:id?', (req, res) => OrderController.show(req, res));
 router.post('/createOrder', (req, res) => OrderController.store(req, res));
 router.put('/updateOrder', (req, res) => OrderController.update(req, res));
 router.delete('/deleteOrder/:id', (req, res) => OrderController.destroy(req, res));
+
+// Rotas de ingredientes
+
+router.get('/ingredients', (req, res) => IngredientController.index(req, res));
 
 module.exports = router;

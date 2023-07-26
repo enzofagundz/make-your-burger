@@ -16,7 +16,7 @@ class StatusController {
 
         } catch (e) {
             PrismaClass.disconnect();
-            return res.json({ error: error.message });
+            return res.json({ error: e.message });
         }
     }
 
@@ -32,7 +32,7 @@ class StatusController {
             return res.json(status);
         } catch (e) {
             PrismaClass.disconnect();
-            res.json({ error: error.message });
+            res.json({ error: e.message });
         }
     }
 }

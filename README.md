@@ -48,9 +48,12 @@ Para o desenvolvimento do projeto foram usadas as seguintes tecnologias:
 
 ## 📚 Bibliotecas usadas
 
-+ [VueRouter](https://router.vuejs.org/installation.html)
-+ [PicoCSS](https://picocss.com/docs/)
-+ [JSON-Server](https://www.npmjs.com/package/json-server#getting-started)
++ [Vue Router v4](https://router.vuejs.org/installation.html)
++ [PicoCSS v1.5.10](https://picocss.com/docs/)
++ [JSON-Server v0.17.3](https://www.npmjs.com/package/json-server#getting-started)
++ [Express v4](https://expressjs.com/pt-br/)
++ [Prisma v5](https://www.prisma.io/docs)
++ [Body-Parser v1.20.2](https://www.npmjs.com/package/body-parser)
 
 ## 💻 Para rodar o projeto em sua máquina
 

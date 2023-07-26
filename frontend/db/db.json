@@ -99,6 +99,18 @@
       ],
       "status": "Finalizado",
       "id": 3
+    },
+    {
+      "nome": "Enzo",
+      "carne": "Veggie Burger",
+      "pao": "3 Queijos",
+      "opcionais": [
+        "Cebola Roxa",
+        "Salame",
+        "Bacon"
+      ],
+      "status": "Solicitado",
+      "id": 4
     }
   ]
 }

@@ -33,19 +33,11 @@ model Optional {
   Order       Order[]
 }
 
-model Customer {
-  customer_id  Int     @id @default(autoincrement())
-  name         String  @unique
-  table_number Int
-  Order        Order[]
-}
-
 model Order {
   order_id    Int      @id @default(autoincrement())
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
-  customer_id Int
-  customer    Customer @relation(fields: [customer_id], references: [customer_id])
+  customer_name String
   bread_id    Int
   bread       Bread    @relation(fields: [bread_id], references: [bread_id])
   meat_id     Int
