@@ -12,25 +12,31 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="burger in burgers" :key="burger.id">
-        <th scope="row">{{ burger.id }}</th>
-        <td>{{ burger.nome }}</td>
-        <td>{{ burger.pao }}</td>
-        <td>{{ burger.carne }}</td>
+      <tr 
+        v-for="burger in burgers" 
+        :key="burger.order_id"
+      >
+        <th scope="row">{{ burger.order_id }}</th>
+        <td>{{ burger.customer_name }}</td>
+        <td>{{ burger.bread.name }}</td>
+        <td>{{ burger.meat.name }}</td>
 
         <td>
           <ul>
-            <li v-for="(optionals, index) in burger.opcionais" :key="index">
-              {{ optionals == 0 ? 'S/ opcionais' : optionals }}
+            <li
+              v-for="optional in burger.optional_json"
+              :key="optional.id"
+            >
+              {{ optional.length != 0 ? optional : 'Sem op' }}
             </li>
           </ul>
         </td>
 
         <td class="actions">
-          <button class="secondary" @click="deleteBurger(burger.id)">
+          <button class="secondary" @click="deleteBurger(burger.order_id)">
             Cancelar
           </button>
-          <select name="" id="" @change="updateStatus($event, burger.id)">
+          <select name="" id="" @change="updateStatus($event, burger.order_id)">
             <option value="">Selecione</option>
             <option :value="state.tipo" v-for="state in status" :key="state.id" :selected="burger.status === state.tipo">
               {{ state.tipo }}
@@ -50,7 +56,7 @@ const burgers = ref();
 const status = ref([]);
 const msg = ref();
 
-
+/*
 const URL_BURGERS = 'http://localhost:3000/burgers';
 const URL_STATUS = 'http://localhost:3000/status';
 
@@ -61,14 +67,14 @@ const getOrder = async () => {
   const data = await req.json();
   
   burgers.value = data;
-
+  
   getStatus();
 }
 
 const getStatus = async () => {
   const req = await fetch(URL_STATUS);
   const data = await req.json();
-
+  
   status.value = data;
 }
 
@@ -81,7 +87,7 @@ const updateStatus = async (event, burgerId) => {
     headers: { 'Content-type': 'application/json' },
     body: JSON.stringify({ status })
   });
-
+  
   const res = await req.json();
 
   msg.value = `Status do pedido N°${res.id} atualizado para "${res.status}" com sucesso!`;
@@ -92,15 +98,31 @@ const deleteBurger = async (burgerId) => {
   await fetch(URL_BURGERS + `/${burgerId}`, {
     method: 'DELETE'
   });
-
+  
   getOrder();
-
+  
   msg.value = `Pedido N°${burgerId} removido com sucesso!`;
   removeMsg();
 }
 
 function removeMsg() {
   setTimeout(() => { msg.value = ''}, 3000);
+}
+*/
+
+const URL_GET_ORDERS = 'http://localhost:3333/orders';
+
+const getOrder = async () => {
+  const req = await fetch(URL_GET_ORDERS);
+  const data = await req.json();
+  
+  burgers.value = data;
+
+  // Transformar o data.optional_json em um array
+
+  burgers.value.forEach(burger => {
+    burger.optional_json = JSON.parse(burger.optional_json);
+  });
 }
 
 onMounted(() => {

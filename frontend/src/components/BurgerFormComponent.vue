@@ -107,7 +107,13 @@ const createBurger = async () => {
     let meats = meatsForm.value;
 
     // Transformar em JSON o array de opcionais para enviar para o backend
-    
+
+    // Verificar se o array de opcionais está vazio
+
+    if (optionals.value.length === 0) {
+        optionals.value = ['Sem opcionais'];
+    }
+
     const data = {
         customer: name.value,
         meat_id: meats,
