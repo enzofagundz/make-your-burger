@@ -17,9 +17,9 @@
                     <select name="bread" id="bread" v-model="breadsForm" required>
                         <option value="" selected>Selecione o tipo de pão</option>
                         <option 
-                            :value="bread.name"
+                            :value="bread.bread_id"
                             v-for="bread in breads"
-                            :key="bread.id"
+                            :key="bread.bread_id"
                         >
                             {{ bread.name }}
                         </option>
@@ -32,9 +32,9 @@
                     <select name="meat" id="meat" v-model="meatsForm" required>
                         <option value="" selected>Selecione o tipo de carne</option>
                         <option
-                            :value="meat.name"
+                            :value="meat.meat_id"
                             v-for="meat in meats"
-                            :key="meat.id"
+                            :key="meat.meat_id"
                         >
                             {{ meat.name }}
                         </option>
@@ -94,21 +94,25 @@ const getIngredients = async () => {
         const data = await res.json();
 
         breads.value = data.breads;
+        console.log(breads.value);
         meats.value = data.meats;
         optionalData.value = data.optionals;
     } catch (error) {
         console.log(error);
     }
 }
- 
+
 const createBurger = async () => {
     let breads = breadsForm.value;
     let meats = meatsForm.value;
+
+    // Transformar em JSON o array de opcionais para enviar para o backend
+    
     const data = {
-        customer_name: name.value,
+        customer: name.value,
         meat_id: meats,
         bread_id: breads,
-        optional_id: Array.from(optionals.value),
+        optional_json: JSON.stringify(optionals.value),
         status_id: 1
     }
     
@@ -120,9 +124,11 @@ const createBurger = async () => {
 
     const res = await req.json();
 
+    console.log(res);
+
     // Mensagem para o usuário
 
-    msg.value = `Pedido N° ${res.id} adicionado com sucesso`;
+    msg.value = `Pedido N° ${res.order_id} adicionado com sucesso`;
 
     // Limpar mensagem
 
@@ -133,7 +139,7 @@ const createBurger = async () => {
     name.value = '';
     breadsForm.value = '';
     meatsForm.value = '';
-    optionals.value = [];   
+    optionals.value = [];
 }
 
 onMounted(() => {

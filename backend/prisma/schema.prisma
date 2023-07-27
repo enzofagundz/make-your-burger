@@ -30,7 +30,7 @@ model Status {
 model Optional {
   optional_id Int    @id @default(autoincrement())
   name        String @unique
-  Order       Order[]
+  // Order       Order[]
 }
 
 model Order {
@@ -44,6 +44,7 @@ model Order {
   meat        Meat     @relation(fields: [meat_id], references: [meat_id])
   status_id   Int
   status      Status   @relation(fields: [status_id], references: [status_id])
-  optional_id Int
-  optional    Optional @relation(fields: [optional_id], references: [optional_id])
+  // optional_id Int
+  // optional    Optional @relation(fields: [optional_id], references: [optional_id])
+  optional_json Json?
 }

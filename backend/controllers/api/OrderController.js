@@ -11,8 +11,7 @@ class OrderController {
                 include: {
                     bread: true,
                     meat: true,
-                    status: true,
-                    optional: true
+                    status: true
                 }
             });
             PrismaClass.disconnect();
@@ -33,8 +32,7 @@ class OrderController {
                 include: {
                     bread: true,
                     meat: true,
-                    status: true,
-                    customer: true
+                    status: true
                 }
             });
             PrismaClass.disconnect();
@@ -46,7 +44,7 @@ class OrderController {
     }
 
     async store(req, res) {
-        const { bread_id, meat_id, status_id, customer, optional_id } = req.body;
+        const { bread_id, meat_id, status_id, customer, optional_json } = req.body;
         try {
             const order = await p.order.create({
                 data: {
@@ -54,7 +52,7 @@ class OrderController {
                     meat_id: Number(meat_id),
                     status_id: Number(status_id),
                     customer_name: customer,
-                    optional_id: Number(optional_id)
+                    optional_json: optional_json
                 }
             });
             PrismaClass.disconnect();
