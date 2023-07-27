@@ -76,13 +76,32 @@ class OrderController {
                     bread_id: Number(bread_id),
                     meat_id: Number(meat_id),
                     status_id: Number(status_id),
-                    customer_id: Number(customer_id),
-                    optional_id: Number(optional_id)
+                    customer_name: customer,
+                    optional_json: optional_json
                 }
             });
             PrismaClass.disconnect();
             return res.json(order);
         } catch (error) {
+            PrismaClass.disconnect();
+            return res.json({ error: error.message });
+        }
+    }
+
+    async updateStatus(req, res) {
+        const { id, status_id } = req.body;
+        try {
+            const order = await p.order.update({
+                where: {
+                    order_id: Number(id)
+                },
+                data: {
+                    status_id: Number(status_id)
+                }
+            });
+            PrismaClass.disconnect();
+            return res.json(order);
+        } catch(error) {
             PrismaClass.disconnect();
             return res.json({ error: error.message });
         }

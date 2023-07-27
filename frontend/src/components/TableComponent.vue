@@ -33,14 +33,28 @@
         </td>
 
         <td class="actions">
-          <button class="secondary" @click="deleteOrder(burger.order_id)">
+          <button 
+            class="secondary" 
+            @click="deleteOrder(burger.order_id)"
+          >
             Cancelar
           </button>
-          <select name="" id="" @change="updateStatus($event, burger.order_id)">
+
+          <select 
+            name="status" 
+            id="status" 
+            @change="updateStatus($event, burger.order_id)"
+          >
             <option value="">Selecione</option>
-            <option :value="state.tipo" v-for="state in status" :key="state.id" :selected="burger.status === state.tipo">
+            <option 
+              v-for="state in status"
+              :key="state.id"
+              :value="state.id"
+              :selected="state.tipo == burger.status.name"
+            >
               {{ state.tipo }}
             </option>
+          
           </select>
         </td>
       </tr>
@@ -53,77 +67,27 @@ import { onMounted, ref } from 'vue';
 import { MessageComponent } from './';
 
 const burgers = ref();
-const status = ref([]);
 const msg = ref();
-
-/*
-const URL_BURGERS = 'http://localhost:3000/burgers';
-const URL_STATUS = 'http://localhost:3000/status';
-
-// console.log(URL_BURGERS + '/1')
-
-const getOrder = async () => {
-  const req = await fetch(URL_BURGERS);
-  const data = await req.json();
-  
-  burgers.value = data;
-  
-  getStatus();
-}
-
-const getStatus = async () => {
-  const req = await fetch(URL_STATUS);
-  const data = await req.json();
-  
-  status.value = data;
-}
-
-const updateStatus = async (event, burgerId) => {
-  
-  const status = event.target.value;
-  
-  const req = await fetch(URL_BURGERS + `/${burgerId}`, {
-    method: 'PATCH',
-    headers: { 'Content-type': 'application/json' },
-    body: JSON.stringify({ status })
-  });
-  
-  const res = await req.json();
-
-  msg.value = `Status do pedido N°${res.id} atualizado para "${res.status}" com sucesso!`;
-  removeMsg();
-}
-
-const deleteBurger = async (burgerId) => {
-  await fetch(URL_BURGERS + `/${burgerId}`, {
-    method: 'DELETE'
-  });
-  
-  getOrder();
-  
-  msg.value = `Pedido N°${burgerId} removido com sucesso!`;
-  removeMsg();
-}
-
-function removeMsg() {
-  setTimeout(() => { msg.value = ''}, 3000);
-}
-*/
 
 const URL_GET_ORDERS = 'http://localhost:3333/orders';
 const URL_DELETE_ORDER = 'http://localhost:3333/deleteOrder';
+const URL_UPDATE_STATUS = 'http://localhost:3333/updateStatus';
+
+const status = [
+    { id: 1, tipo: 'Solicitado' },
+    { id: 2, tipo: 'Em produção' },
+    { id: 3, tipo: 'Finalizado' }
+  ]
 
 const getOrder = async () => {
   const req = await fetch(URL_GET_ORDERS);
   const data = await req.json();
-  
   burgers.value = data;
-
-  // Transformar o data.optional_json em um array
-
   burgers.value.forEach(burger => {
     burger.optional_json = JSON.parse(burger.optional_json);
   });
+
+  console.log(burgers.value);
 }
 
 const deleteOrder = async (id) => {
@@ -131,7 +95,34 @@ const deleteOrder = async (id) => {
     method: 'DELETE'
   });
 
-  window.location.reload();
+  msg.value = `Pedido N°${id} removido com sucesso!`;
+  removeMsg();
+
+  burgers.value = burgers.value.filter(burger => burger.order_id != id);
+}
+
+const updateStatus = async (event, id) => {
+  
+  const status = event.target.value;
+
+  console.log(status);
+
+  const req = await fetch(URL_UPDATE_STATUS,{
+    method: 'PUT',
+    headers: { 'Content-type': 'application/json' },
+    body: JSON.stringify({
+      status_id: status,
+      id: id
+    })
+  });
+
+  const res = await req.json();
+  msg.value = `Status do pedido N°${res.order_id} atualizado com sucesso!`;
+  removeMsg();
+}
+
+function removeMsg() {
+  setTimeout(() => { msg.value = ''}, 3000);
 }
 
 onMounted(() => {

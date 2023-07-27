@@ -43,6 +43,7 @@ router.get('/orders', (req, res) => OrderController.index(req, res));
 router.get('/orders/:id?', (req, res) => OrderController.show(req, res));
 router.post('/createOrder', (req, res) => OrderController.store(req, res));
 router.put('/updateOrder', (req, res) => OrderController.update(req, res));
+router.put('/updateStatus', (req, res) => OrderController.updateStatus(req, res));
 router.delete('/deleteOrder/:id', (req, res) => OrderController.destroy(req, res));
 
 // Rotas de ingredientes
