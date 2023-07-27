@@ -45,6 +45,7 @@ Para o desenvolvimento do projeto foram usadas as seguintes tecnologias:
 + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
 + [Node LTS](https://nodejs.org/en)
 + [Vite](https://vitejs.dev/)
++ [MySQL Server v8](https://dev.mysql.com/downloads/mysql/8.0.html)
 
 ## 📚 Bibliotecas usadas
 
@@ -53,7 +54,6 @@ Para o desenvolvimento do projeto foram usadas as seguintes tecnologias:
 + [Express v4](https://expressjs.com/pt-br/)
 + [Prisma v5](https://www.prisma.io/docs)
 + [Body-Parser v1.20.2](https://www.npmjs.com/package/body-parser)
-+ [MySQL Server v8](https://dev.mysql.com/downloads/mysql/8.0.html)
 
 ## 💻 Para rodar o frontend do projeto em sua máquina
 
