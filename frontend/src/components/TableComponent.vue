@@ -33,7 +33,7 @@
         </td>
 
         <td class="actions">
-          <button class="secondary" @click="deleteBurger(burger.order_id)">
+          <button class="secondary" @click="deleteOrder(burger.order_id)">
             Cancelar
           </button>
           <select name="" id="" @change="updateStatus($event, burger.order_id)">
@@ -111,6 +111,7 @@ function removeMsg() {
 */
 
 const URL_GET_ORDERS = 'http://localhost:3333/orders';
+const URL_DELETE_ORDER = 'http://localhost:3333/deleteOrder';
 
 const getOrder = async () => {
   const req = await fetch(URL_GET_ORDERS);
@@ -123,6 +124,14 @@ const getOrder = async () => {
   burgers.value.forEach(burger => {
     burger.optional_json = JSON.parse(burger.optional_json);
   });
+}
+
+const deleteOrder = async (id) => {
+  await fetch(URL_DELETE_ORDER + `/${id}`, {
+    method: 'DELETE'
+  });
+
+  window.location.reload();
 }
 
 onMounted(() => {
