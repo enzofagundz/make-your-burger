@@ -53,8 +53,9 @@ Para o desenvolvimento do projeto foram usadas as seguintes tecnologias:
 + [Express v4](https://expressjs.com/pt-br/)
 + [Prisma v5](https://www.prisma.io/docs)
 + [Body-Parser v1.20.2](https://www.npmjs.com/package/body-parser)
++ [MySQL Server v8](https://dev.mysql.com/downloads/mysql/8.0.html)
 
-## 💻 Para rodar o projeto em sua máquina
+## 💻 Para rodar o frontend do projeto em sua máquina
 
 Rode os seguintes comandos:
 
@@ -68,6 +69,12 @@ git clone git@github.com:enzofagundz/make-your-burger.git
 
 ```sh
 cd ./make-your-burguer
+```
+
+### Entre na pasta frontend
+
+```sh
+cd ./frontend
 ```
 
 ### Instale as dependências
@@ -91,44 +98,104 @@ yarn install
 npm run dev
 ```
 
-### Iniciar o JSON-Server
+## 💻 Para rodar o backend do projeto em sua máquina
+
+### Entre na pasta backend
+```sh 
+cd ./backend
+```
+
+### Instale as dependências
 
 ```sh
-npm run backend
+#Instalar as dependências com o npm
+
+npm install
+```
+Ou
+
+```sh
+#Instalar as dependências com o yarn
+
+yarn install
+```
+
+### Configure o arquivo .ent com as informações do seu banco de dados
+
+`DATABASE_URL="mysql://root:root@localhost:/backend"`
+
+[Visite a documentação do Prisma](https://www.prisma.io/docs/concepts/database-connectors)
+
+### Rode o migrate do Prisma
+
+```sh
+npx prisma migrate dev --name init
+```
+
+### Compilar e regarregar para desenvolvimento
+
+```sh
+npm run dev
 ```
 
 ## 🗂️ Estrutura de pastas
 
-- A pasta `node_modules` é onde são salvas todas as dependências da aplicação.
+A pasta raiz do repositório possui 3 arquivos: `.gitignore`, `LICENSE` e o `README.md`.
+
+Além disso, a pasta raiz do repositório possui outras duas pastas: `frontend` e `backend`. 
+
+**Dentro da pasta frontend você encontrará:**
+
 - A pasta `public` guarda os arquivos estáticos da aplicação.
     - Dentro desta pasta há o `index.html` principal, onde possui a div com id “app” em que a aplicação está sendo montada.
-- O arquivo `.gitignore` lista para o git quais são os arquivos que podem ser ignorados ao fazer o versionamento da aplicação
+
 - O arquivo  `package-lock.json` é onde está as configurações do projeto
+
 - O arquivo `package.json` possui os scripts e dependências, e serve como um “rg” do projeto
+
 - A pasta `src` é onde estão os arquivos da aplicação. Dentro dela estão outras pastas, como:
+
     - A pasta `assets` há alguns outros arquivos estáticos
+
     - A pasta `components` é onde estão as partes da interface
     - O arquivo principal `App.vue` é o componente pai que monta os outros componentes
+
     - O arquivo `main.js` importa a instância de Vue, cria o aplicativo e monta ele na div com id “app”
+
     - A pasta `router` contém os arquivos responsáveis pelo roteamento da aplicação. Nela, você pode encontrar os arquivos que definem as rotas e a navegação entre as diferentes páginas do aplicativo. A biblioteca Vue Router foi usada para facilitar a configuração e gerenciamento das rotas.
+
     - A pasta `views` (ou páginas) contém os componentes que representam as diferentes páginas da aplicação. Cada arquivo dentro dessa pasta geralmente corresponde a uma página específica do aplicativo. Esses componentes podem conter outros componentes menores, como os da pasta components, para construir a estrutura da página. As views são montadas dentro do componente pai App.vue ou são referenciadas pelos arquivos de roteamento da pasta router.
+
+**Dentro da pasta backend você encontrará:**
+
++ A pasta `controllers`, que contém os controladores (controllers) da aplicação. Os controladores são responsáveis por receber as requisições HTTP, processar os dados e retornar as respostas adequadas. A pasta api dentro dela pode conter os controladores específicos relacionados à API da aplicação.
+
++ A pasta `prisma`, utilizada para armazenar arquivos relacionados ao Prisma, que é um ORM (Object-Relational Mapping) usado para facilitar a interação com o banco de dados. Nela, há a pasta migrations, que contém o histórico de migrações em SQL. As migrações são usadas para versionar e aplicar as mudanças no esquema do banco de dados de forma controlada.
+
++ A pasta `routes`, onde ficam os arquivos que definem as rotas e endpoints da API do backend. Aqui, é usado o framework de roteamento Express.js, para facilitar a criação das rotas e o gerenciamento das requisições.
+
++ O arquivo `index.js` é o ponto de entrada principal do backend. É a partir deste arquivo que o servidor é iniciado e as configurações iniciais da aplicação são definidas.
+
++ O arquivo `package-lock.json` é gerado automaticamente pelo npm para travar as versões exatas das dependências instaladas no projeto. Isso garante que todos os membros da equipe tenham as mesmas versões de pacotes, evitando possíveis problemas de compatibilidade.
+
++ O arquivo `package.json` é o "rg" (registro geral) do projeto, tanto no frontend quanto no backend. Ele contém informações sobre o projeto, suas dependências, scripts personalizados, autor, versão, licença e outras configurações relevantes. Além disso, é usado para instalar e gerenciar as dependências do projeto por meio do gerenciador de pacotes.
 
 ## 🔧 Funcionalidades implementadas
 
 Até então o projeto contém as seguintes funcionalidades:
 
-+ Criar um pedido
-+ Listar pedidos
-+ Excluir pedidos
-+ Mudar status de pedido
++ ~~Criar um pedido~~
++ ~~Listar pedidos~~
++ ~~Excluir pedidos~~
++ ~~Mudar status de pedido~~
++ ~~Banco de dados e back-end próprio~~
 
 ### Funcionalidades em desenvolvimento
 
 + Autenticação
 + Captura de erros
 + Novo layout com Tailwind CSS
-+ State com Vuex
-+ Banco de dados e back-end próprio
++ State com Pinia
 
 # 📓 Licença
 
