@@ -1,6 +1,6 @@
 <hgroup>
     <h1>
-        Make Your Burger <img src="public/favicon.ico" />
+        Make Your Burger <img src="./frontend/public/favicon.ico" />
     </h1>
     <h3>
         O seu lanche, do seu jeito! 😋
