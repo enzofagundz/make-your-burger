@@ -122,7 +122,7 @@ yarn install
 
 ### Configure o arquivo .ent com as informações do seu banco de dados
 
-`DATABASE_URL="mysql://root:root@localhost:/backend"`
+`DATABASE_URL="banco_de_dados://usuario:local_hospedado:/tabela"`
 
 [Visite a documentação do Prisma](https://www.prisma.io/docs/concepts/database-connectors)
 
