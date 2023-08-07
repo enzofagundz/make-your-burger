@@ -44,7 +44,7 @@ class OrderController {
     }
 
     async store(req, res) {
-        const { bread_id, meat_id, status_id, customer, optional_json } = req.body;
+        const { bread_id, meat_id, status_id, customer, optional } = req.body;
         try {
             const order = await p.order.create({
                 data: {
@@ -52,7 +52,7 @@ class OrderController {
                     meat_id: Number(meat_id),
                     status_id: Number(status_id),
                     customer_name: customer,
-                    optional_json: optional_json
+                    optional: optional
                 }
             });
             PrismaClass.disconnect();
