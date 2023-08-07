@@ -94,7 +94,6 @@ const getIngredients = async () => {
         const data = await res.json();
 
         breads.value = data.breads;
-        console.log(breads.value);
         meats.value = data.meats;
         optionalData.value = data.optionals;
     } catch (error) {
@@ -118,8 +117,9 @@ const createBurger = async () => {
         customer: name.value,
         meat_id: meats,
         bread_id: breads,
-        optional_json: JSON.stringify(optionals.value),
-        status_id: 1
+        // optional_json: JSON.stringify(optionals.value),
+        status_id: 1,
+        optional: optionals.value.toString()
     }
     
     const req = await fetch(URL_CREATE_ORDER, {

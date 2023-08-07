@@ -28,6 +28,7 @@ router.delete('/deleteMeat/:id', (req, res) => MeatController.destroy(req, res))
 
 router.get('/status', (req, res) => StatusController.index(req, res));
 router.get('/status/:id?', (req, res) => StatusController.show(req, res));
+router.post('/createStatus', (req, res) => StatusController.store(req, res));
 
 // Rotas de opcionais
 

@@ -24,7 +24,7 @@
         <td>
           <ul>
             <li
-              v-for="optional in burger.optional_json"
+              v-for="optional in burger.optional"
               :key="optional.id"
             >
               {{ optional.length != 0 ? optional : 'Sem op' }}
@@ -84,10 +84,8 @@ const getOrder = async () => {
   const data = await req.json();
   burgers.value = data;
   burgers.value.forEach(burger => {
-    burger.optional_json = JSON.parse(burger.optional_json);
+    burger.optional = burger.optional.split(',');
   });
-
-  console.log(burgers.value);
 }
 
 const deleteOrder = async (id) => {

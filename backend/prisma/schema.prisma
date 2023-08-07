@@ -3,8 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:../db/hamburgueria.db"
 }
 
 // Modelos para o banco de dados da Hamburgueria
@@ -46,5 +46,5 @@ model Order {
   status      Status   @relation(fields: [status_id], references: [status_id])
   // optional_id Int
   // optional    Optional @relation(fields: [optional_id], references: [optional_id])
-  optional_json Json?
+  optional   String
 }

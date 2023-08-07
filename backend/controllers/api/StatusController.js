@@ -35,6 +35,22 @@ class StatusController {
             res.json({ error: e.message });
         }
     }
+
+    async store(req, res) {
+        const { name } = req.body;
+        try {
+            const status = await p.status.create({
+                data: {
+                    name: name
+                }
+            });
+            PrismaClass.disconnect();
+            return res.json(status);
+        } catch (e) {
+            PrismaClass.disconnect();
+            res.json({ error: e.message });
+        }
+    }
 }
 
 module.exports = new StatusController();
